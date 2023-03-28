@@ -1,0 +1,25 @@
+<nav class="navbar navbar-expand-lg navbar-light bd-navbar sticky-top" style="background-color: lightskyblue">
+  <div class="container">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Переключатель навигации">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="{% url 'about:site' %}">
+      {% load static %}
+        <img src="{% static 'img/logo.PNG' %}" width="30" height="30" class="d-inline-block align-top" alt="">
+      <span style="color:red">Workshop</span>repair
+    </a>
+    <ul class="nav nav-pills">
+      {% with request.resolver_match.view_name as view_name %}
+        {% if user.is_authenticated %}
+        <li class="nav-link link-dark">
+          Пользователь: {{ user.username }}
+        </li>
+          <li class="nav-item"> 
+            <a class="nav-link link-dark {% if view_name  == 'users:logout' %}active{% endif %}" 
+          href="{% url 'users:logout' %}">Выйти.</a>
+          </li>
+        {% endif %}
+      {% endwith %}
+    </ul>
+  </div>
+</nav>

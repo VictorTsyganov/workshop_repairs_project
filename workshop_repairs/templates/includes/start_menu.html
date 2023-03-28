@@ -1,0 +1,42 @@
+<ul class="nav nav-pills flex-column">
+    <a class="navbar-brand" style="background-color: lightskyblue; width: 280px;" href="{% url 'about:site' %}">
+        {% load static %}
+        <span style="background-color: lightskyblue">_</span>
+          <img src="{% static 'img/logo.PNG' %}" width="30" height="30" class="d-inline-block align-top" alt="">
+        <span style="color:red">Workshop</span>repair menu_
+     </a>
+  {% with request.resolver_match.view_name as view_name %}
+    {% if user.is_authenticated %}
+      <li class="nav-item" style="width: 280px;">
+        <a class="nav-link link-dark {% if view_name  == 'journal_repairs:journal' %}active{% endif %}" 
+        href="{% url 'journal_repairs:journal' %}">Новая запись в журнал.</a>
+      </li>
+      <li class="nav-item" style="width: 280px;">
+          <a class="nav-link link-dark {% if view_name  == 'users:password_change' %}active{% endif %}" 
+          href="{% url 'users:password_change' %}">Изменить пароль.</a>
+      </li>
+      <li class="nav-item" style="width: 280px;"> 
+          <a class="nav-link link-dark {% if view_name  == 'users:logout' %}active{% endif %}" 
+          href="{% url 'users:logout' %}">Выйти.</a>
+      </li>
+      <li class="nav-link link-dark">
+        Пользователь: {{ user.username }}
+      </li>
+      {% if user.is_staff %}
+      <li class="nav-item" style="width: 280px;"> 
+        <a class="nav-link link-dark" 
+        href="/admin/">Админ ресурс.</a>
+      </li>
+      {% endif %}
+    {% else %}
+    <li class="nav-item" style="width: 280px;">
+      <a class="nav-link link-dark {% if view_name  == 'users:login' %}active{% endif %}" 
+      href="{% url 'users:login' %}">Вход на сайт.</a>
+  </li>
+  <li class="nav-item" style="width: 280px;">
+      <a class="nav-link link-dark {% if view_name  == 'users:password_reset_admin' %}active{% endif %}" 
+      href="{% url 'users:password_reset_admin' %}">Забыли пароль?</a>
+  </li>
+    {% endif %}
+  {% endwith %}
+</ul>

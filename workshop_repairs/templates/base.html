@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    {% load static %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="{% static 'img/logo.PNG' %}" type="image">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'img/logo.PNG' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'img/logo.PNG' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'img/logo.PNG' %}">
+    <meta name="msapplication-TileColor" content="#000">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="canonical" href="https://bootstrap-5.ru/docs/5.3/getting-started/introduction/">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <style type="text/css">
+      #sidebar { position: absolute;} 
+      #sidebar { overflow: auto; padding: 10px;}
+      #content { padding-top: 10px;}
+      #sidebar { 
+       width: 350px; height: auto; background: white; z-index: 1;
+       top: auto; /* Расстояние от верхнего края */
+      }
+      #content {
+        width: auto; height: auto;
+        {% comment %} top: 50px; /* Расстояние от верхнего края */ {% endcomment %}
+        {% comment %} left: 10px; /* Расстояние от левого края */  {% endcomment %}
+       }
+      #content_main { padding-top: 80px; padding-bottom: 10px;}
+      #content_main {
+        width: auto; height: auto;
+       }
+      
+      #content_password { padding-top: 10px; padding-bottom: 170px;}
+      #content_password {
+        width: auto; height: auto;
+       }
+      
+     </style>
+    <title>
+      {% block title %}
+        Стартовая страница
+      {% endblock %}
+    </title>
+  </head>
+  <body>
+    <header>
+      {% include 'includes/header.html' %}
+    </header>
+      {% block content %}
+        <main>
+          <div class="container py-5">
+            <h1>Это главная страница проекта Workshop Repair, но она пока не оформлена.</h1>
+            Что-то пошло не так. Нет данных.
+          </div>
+        </main>
+      {% endblock %}
+    <footer class="border-top text-center py-3">
+      {% include 'includes/footer.html' %}
+    </footer>
+    <script rel="stylesheet" src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+  </body>
+</html>
