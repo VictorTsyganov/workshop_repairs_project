@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+{% block title %}
+  {% if slug %}
+  Журнал ремонтов. {{ slug }}
+  {% else %}
+  Журнал ремонтов.
+  {% endif %}
+{% endblock %}
+{% block content %}
+  <aside id="sidebar">
+      <nav class="navbar navbar-expand-lg navbar-light bd-navbar sticky-top" style="width: 250px;">
+          <div class="container">
+              <div class="navbar navbar-fixed-top" id="sidebar-wrapper" role="navigation">
+                  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    {% include 'includes/start_menu.html' %}
+                  </div>
+              </div>
+          </div>
+      </nav>
+  </aside>
+<main id="content">
+  <div class="d-md-flex flex-md-row-reverse align-items-center justify-content-between">
+    <div class="col-md-9 p-5">
+      <div class="card">
+        <div class="card-header">
+          <h3>
+            {% if slug %}
+            Журнал ремонтов. {{ slug }}
+            {% else %}
+            Журнал ремонтов. 
+            {% endif %}
+          </h3>
+          <style>
+            table {
+              width: 100%; /* Ширина таблицы */
+              background: white; /* Цвет фона таблицы */
+              color: black; /* Цвет текста */
+              border-spacing: 1px; /* Расстояние между ячейками */
+              border-collapse: collapse;
+            }
+            td, th {
+              background: white; /* Цвет фона ячеек */
+              padding: 5px; /* Поля вокруг текста */
+            }
+          </style>
+        </div>
+        <div class="card-body">
+          <table>
+            <tr> 
+              <th> 
+                <form action="{% url 'journal_repairs:search' %}" class="form-inline" method="get"> 
+                  <div class="form-group">
+                    <label for="" class="sr-only">Поиск номеру ЗР и заказчику</label>
+                    <input name="search" type="" class="form-control" id="" placeholder="Введите номер ЗР или название заказчика">
+                  </div>
+                  <button type="submit" class="btn btn-success btn-lg mb-2">Поиск</button>
+                </form>
+              </th>
+              <th> 
+                <form action="{% url 'journal_repairs:esn_search' %}" class="form-inline" method="get"> 
+                  <div class="form-group">
+                    <label for="" class="sr-only">Поиск по двигателю</label>
+                    <input name="search" type="" class="form-control" id="" placeholder="Введите номер ДВС или его название">
+                  </div>
+                  <button type="submit" class="btn btn-success btn-lg mb-2">Поиск</button>
+                </form>
+              </th>
+            </tr>
+          </table>
+          {% if query %}
+            По запросу: {{ query }} найдены следующие заявки:
+          {% endif %}
+          {% for post in page_obj %}
+            <hr>
+            <table>
+              <tr>
+                <th><mark><b>Заявка на ремонт:</b></mark></th>
+                <th><mark><b>Дата открытия заявки:</b></mark></th>
+                <th><mark><b>Заказчик выполнения ремонта:</b></mark></th>
+                <th><mark><b>Тип ремонта:</b></mark></th>
+                <th><mark><b>Автор заявки на ремонт:</b></mark></th>
+              </tr>
+              <tr>
+                <td>{{ post.repair_number }}</td>
+                <td>{{ post.pub_date|date:"d E Y" }}</td>
+                <td>{{ post.customer.name }}</td>
+                <td>{{ post.repair_type.title }}</td>
+                <td>{{ post.author.get_username }}</td>
+              </tr>
+            </table>
+            <a href="{% url 'journal_repairs:customer_repairs' post.customer.slug %}">Показать все ремонты заказчика {{ post.customer.name }}</a>
+            {% for item in post.engine_numbers.all %}
+              <table>
+                  <tr>
+                    <th><mark><b>Модель двигателя:</b></mark></th>
+                    <th><mark><b>Номер двигателя:</b></mark></th>
+                    <th><mark><b>Оборудование:</b></mark></th>
+                    <th><mark><b>Наработка двигателя:</b></mark></th>
+                  </tr>
+                  <tr>
+                    <td>{{ item.engine }}</td>
+                    <td>{{ item.engine_number }}</td>
+                    <td>{{ item.equipment }}</td>
+                    {% for hour in item.hours.all %}
+                      {% if hour.pub_date|date:"d E Y" == post.pub_date|date:"d E Y" %}
+                          <td>{{ hour }}</td>
+                      {% endif %}
+                    {% endfor %}  
+                  </tr>
+              </table>
+                <a href="{% url 'journal_repairs:esn_repairs' item.slug %}">Показать все ремонты {{ item.engine }} {{ item.engine_number }}</a>
+            {% endfor %}
+            <table>
+              <tr>
+                <th>Описание ремонта:</th>
+              </tr>
+              <tr>  
+                <td>{{ post.description }}</td>
+              </tr>
+            </table>
+            <div class="col-md-6 offset-md-0">
+              <a class="btn btn-primary"
+              href="{% url 'journal_repairs:repair_detail' post.id %}">Подробная информация о данном ремонте.</a>
+            </div>
+            {% if not forloop.last %}<hr>{% endif %}
+          {% endfor %}
+          {% include 'includes/paginator.html' %}
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}

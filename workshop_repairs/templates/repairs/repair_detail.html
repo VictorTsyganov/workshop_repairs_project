@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% block title %}
+  Заявка {{ repair.repair_number }}.
+{% endblock %}
+{% block content %}
+  <aside id="sidebar">
+      <nav class="navbar navbar-expand-lg navbar-light bd-navbar sticky-top" style="width: 250px;">
+          <div class="container">
+              <div class="navbar navbar-fixed-top" id="sidebar-wrapper" role="navigation">
+                  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    {% include 'includes/repair_detail_menu.html' %}
+                  </div>
+              </div>
+          </div>
+      </nav>
+  </aside>
+<main id="content">  
+  <div class="d-md-flex flex-md-row-reverse align-items-center justify-content-between">
+    <div class="col-md-9 p-5">
+      <div class="card">
+        <div class="card-header">
+          <h3>Заявка на ремонт {{ repair.repair_number }}</h3>
+        </div>
+        <div class="card-body">
+          <article>
+            <ul>
+              <li>
+                <mark><b>Дата открытия заявки: </b></mark> {{ repair.pub_date|date:"d E Y" }}
+              </li>
+              <li>
+                <mark><b>Заявка на ремонт: </b></mark> {{ repair.repair_number }}
+              </li>
+              <li>
+                <mark><b>Заказчик выполнения ремонта: </b></mark> {{ repair.customer.name }}
+              </li>
+              <li>
+                <mark><b>Тип ремонта: </b></mark> {{ repair.repair_type.title }}
+              </li>
+              {% if repair.customer_contacts %}
+                <li>
+                  <mark><b>Контакты заказчика: </b></mark> {{ repair.customer_contacts }}
+                  <mark><b>Телефон: </b></mark> {{ repair.customer_contacts.phone_number }}
+                </li>
+              {% endif %}
+              <li>
+                <mark><b>Место эксплуатации: </b></mark> {{ repair.address }}
+              </li>
+              <li>
+                <mark><b>Автор заявки на ремонт: </b></mark> {{ repair.author.get_username }}
+              </li>
+              <li>
+                <mark><b>Примечания: </b></mark> {{ repair.description }}
+              </li>
+              {% if user == repair.author or user.is_staff %}
+                <div class="col-md-6 offset-md-0">
+                  <a class="btn btn-primary"
+                    href="{% url 'journal_repairs:repair_edit' repair.id %}">Редактировать запись ЗР</a>
+                </div>
+              {% endif %}
+            </ul>
+            <h5>Данные по двигателю</h5>
+            <ul>
+              {% for item in repair.engine_numbers.all %}
+                <li>
+                  <mark><b>Номер двигателя: </b></mark> {{ item.engine_number }}
+                </li>
+                <li>
+                  <mark><b>Модель двигателя: </b></mark> {{ item.engine }}
+                </li>
+                <li>
+                  <mark><b>Оборудование на котором установлен ДВС: </b></mark> {{ item.equipment }}
+                </li>
+                {% if item.equipment_number %}
+                  <li>
+                    <mark><b>Серийный номер оборудования: </b></mark> {{ item.equipment_number }}
+                  </li>
+                {% endif %}
+                <li>
+                  <mark><b>Владелец оборудования: </b></mark> {{ item.owner }}
+                </li>
+                <li>
+                  <mark><b>Адрес владельца оборудования: </b></mark> {{ item.address }}
+                </li>
+                <li>
+                  <mark><b>Дата начала эксплуатации: </b></mark> {{ item.start_date }}
+                </li>
+                {% for hour in item.hours.all %}
+                  {% if hour.pub_date|date:"d E Y" == repair.pub_date|date:"d E Y" %}
+                    <li>
+                      <mark><b>Наработка двигателя на дату </b></mark> {{ hour.pub_date|date:"d E Y" }} <mark><b>в рамках данной заявки: </b></mark> {{ hour }}
+                    </li>
+                  {% else %}
+                    <li>
+                      <mark><b>Наработка двигателя на дату </b></mark> {{ hour.pub_date|date:"d E Y" }}: {{ hour }}
+                    </li>
+                  {% endif %}
+                {% endfor %}
+                <div class="col-md-6 offset-md-0">
+                  <a class="btn btn-primary"
+                    href="{% url 'journal_repairs:esn_edit' item.id repair.id %}">Редактировать запись ДВС</a>
+                </div>
+                {% if not forloop.last %}<hr>{% endif %}
+              {% endfor %}
+            {% include 'includes/comments.html' %}
+          </article>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}

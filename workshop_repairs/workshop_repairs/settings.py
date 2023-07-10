@@ -26,7 +26,12 @@ SECRET_KEY = 'django-insecure-01%!l@cu9w8^tgsx@(92_6ga(ph!*bqo06k@t313lfrkdp-lk(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    '[::1]',
+    'testserver',
+]
 
 
 # Application definition
@@ -39,11 +44,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'journal_repairs.apps.JournalRepairsConfig',
+    'acceptance_aggregate.apps.AcceptanceAggregateConfig',
+    'disassembly.apps.DisassemblyConfig',
     'users.apps.UsersConfig',
     'core.apps.CoreConfig',
     'about.apps.AboutConfig',
     'sorl.thumbnail',
     'phonenumber_field',
+    'django_select2',
+    'multiupload',
 ]
 
 MIDDLEWARE = [
@@ -54,6 +63,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+INTERNAL_IPS = [
+    '127.0.0.1',
 ]
 
 ROOT_URLCONF = 'workshop_repairs.urls'
@@ -126,13 +139,30 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 LOGIN_URL = 'users:login'
 LOGIN_REDIRECT_URL = 'about:site'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+POSTS_ON_PAGE = 4
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+    },
+    # 'select2': {
+    #     'BACKEND': "django_redis.cache.RedisCache",
+    #     "LOCATION": "redis://127.0.0.1:6379/0",
+    #     "OPTIONS": {
+    #         "CLIENT_CLASS": "django_redis.client.DefaultClient",
+    #     }
+    # }
+}
+
+# Tell select2 which cache configuration to use:
+SELECT2_CACHE_BACKEND = 'default'

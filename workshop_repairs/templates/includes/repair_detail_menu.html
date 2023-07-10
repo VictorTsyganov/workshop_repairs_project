@@ -1,0 +1,36 @@
+<ul class="nav nav-pills flex-column">
+    <a class="navbar-brand" style="background-color: lightskyblue; width: 280px;" href="{% url 'about:site' %}">
+        {% load static %}
+        <span style="background-color: lightskyblue">_</span>
+          <img src="{% static 'img/logo.PNG' %}" width="30" height="30" class="d-inline-block align-top" alt="">
+        <span style="color:red">Workshop</span>repair menu_
+     </a>
+  {% with request.resolver_match.view_name as view_name %}
+    <li class="nav-item" style="width: 280px;">
+      <a class="nav-link link-dark {% if view_name  == 'journal_repairs:repair' %}active{% endif %}" 
+      href="{% url 'journal_repairs:repair' %}">Журнал ремонтов.</a>
+    </li>
+    <li class="nav-item" style="width: 280px;">
+      <a class="nav-link link-dark {% if view_name  == 'journal_repairs:repair_detail' %}active{% endif %}" 
+      href="{% url 'journal_repairs:repair_detail' repair_id %}">Заявка на ремонт {{ repair }}.</a>
+    </li>
+    <li class="nav-item" style="width: 280px;">
+      <a class="nav-link link-dark {% if view_name  == 'acceptance_aggregate:acceptance_aggregate_view' %}active{% endif %}" 
+      href="{% url 'acceptance_aggregate:acceptance_aggregate_view' repair_id %}">
+        Приемка по ЗР {{ repair }}. 
+        {% if acceptance %}
+          Заполнено.
+        {% endif %}
+      </a>
+    </li>
+    <li class="nav-item" style="width: 280px;">
+      <a class="nav-link link-dark {% if view_name  == 'disassembly:crankshaft_view' %}active{% endif %}" 
+      href="{% url 'disassembly:crankshaft_view' repair_id %}">
+      Проверка коленчатого вала {{ repair }}.
+      {% if dis_crankshaft %}
+          Заполнено.
+      {% endif %}
+      </a>
+    </li>
+  {% endwith %}
+</ul>

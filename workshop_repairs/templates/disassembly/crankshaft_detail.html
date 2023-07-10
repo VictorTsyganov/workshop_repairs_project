@@ -1,0 +1,737 @@
+{% extends 'base.html' %}
+{% block title %}
+  Заявка {{ repair.repair_number }}.
+{% endblock %}
+{% block content %}
+{% load static %}
+  <aside id="sidebar">
+      <nav class="navbar navbar-expand-lg navbar-light bd-navbar sticky-top" style="width: 250px;">
+          <div class="container">
+              <div class="navbar navbar-fixed-top" id="sidebar-wrapper" role="navigation">
+                  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    {% include 'includes/repair_detail_menu.html' %} 
+                  </div>
+              </div>
+          </div>
+      </nav>
+  </aside>
+<main id="content">  
+  <div class="d-md-flex flex-md-row-reverse align-items-center justify-content-between">
+    <div class="col-md-9 p-5">
+      <div class="card">
+        <div class="card-header">
+          <h3>Заявка на ремонт {{ repair.repair_number }}. Дефектовка КВ двигателя {{ esn.engine }} номер {{ esn.engine_number }}</h3>
+        </div>
+        <style>
+          table {
+            width: 100%; /* Ширина таблицы */
+            background: white; /* Цвет фона таблицы */
+            color: black; /* Цвет текста */
+            border-spacing: 1px; /* Расстояние между ячейками */
+            border-collapse: collapse;
+          }
+          td, th {
+            background: white; /* Цвет фона ячеек */
+            padding: 5px; /* Поля вокруг текста */
+          }
+        </style>
+        <div class="card-body">
+          <article>
+            <h5>1. Визуальный осмотр шатунных шеек коленчатого вала</h5>
+            <div class="mb-3 mb-md-0 d-flex">
+              <img src="{% static 'img/visual_cheсk_crankshaft.jpg' %}" srcset="{% static 'img/visual_cheсk_crankshaft.jpg' %} 320w, {% static 'img/visual_cheсk_crankshaft.jpg' %} 480w, {% static 'img/visual_cheсk_crankshaft.jpg' %} 768w" sizes="(max-width: 800px) 220px, (min-width: 800px) 420px">
+            </div>
+            <table>
+              <tr>
+                {% if vc_con_rod_journals.con_journal_1 %}
+                  <th>
+                    1-ая шатунная
+                  </th>
+                {% endif %}
+                {% if vc_con_rod_journals.con_journal_2 %}
+                  <th>
+                    2-ая шатунная
+                  </th>
+                {% endif %}
+                {% if vc_con_rod_journals.con_journal_3 %}
+                  <th>
+                    3-я шатунная
+                  </th>
+                {% endif %}
+                {% if vc_con_rod_journals.con_journal_4 %}
+                  <th>
+                    4-ая шатунная
+                  </th>
+                {% endif %}
+                {% if vc_con_rod_journals.con_journal_5 %}
+                  <th>
+                    5-ая шатунная
+                  </th>
+                {% endif %}
+                {% if vc_con_rod_journals.con_journal_6 %}
+                  <th>
+                    6-ая шатунная
+                  </th>
+                {% endif %}
+                {% if vc_con_rod_journals.con_journal_7 %}
+                  <th>
+                    7-ая шатунная
+                  </th>
+                {% endif %}
+                {% if vc_con_rod_journals.con_journal_8 %}
+                  <th>
+                    8-ая шатунная
+                  </th>
+                {% endif %}
+                {% if vc_con_rod_journals.con_journal_9 %}
+                  <th>
+                    9-ая шатунная
+                  </th>
+                {% endif %}
+                {% if vc_con_rod_journals.con_journal_10 %}
+                  <th>
+                    10-ая шатунная
+                  </th>
+                {% endif %}
+              </tr>
+              <tr>
+                {% if vc_con_rod_journals.con_journal_1 and vc_con_rod_journals.con_journal_1 == 'Без изъянов' or vc_con_rod_journals.con_journal_1 == 'Царапина допустимая' %}
+                  <td>
+                    ✅ {{ vc_con_rod_journals.con_journal_1 }}
+                  </td>
+                  {% elif vc_con_rod_journals.con_journal_1 != None %}
+                  <td>
+                    🟥 {{ vc_con_rod_journals.con_journal_1 }}
+                  </td>
+                {% endif %}
+                {% if vc_con_rod_journals.con_journal_2 and vc_con_rod_journals.con_journal_2 == 'Без изъянов' or vc_con_rod_journals.con_journal_2 == 'Царапина допустимая' %}
+                  <td>
+                    ✅ {{ vc_con_rod_journals.con_journal_2 }}
+                  </td>
+                  {% elif vc_con_rod_journals.con_journal_2 != None %}
+                  <td>
+                    🟥 {{ vc_con_rod_journals.con_journal_2 }}
+                  </td>
+                {% endif %}
+                {% if vc_con_rod_journals.con_journal_3 and vc_con_rod_journals.con_journal_3 == 'Без изъянов' or vc_con_rod_journals.con_journal_3 == 'Царапина допустимая' %}
+                  <td>
+                    ✅ {{ vc_con_rod_journals.con_journal_3 }}
+                  </td>
+                  {% elif vc_con_rod_journals.con_journal_3 != None %}
+                  <td>
+                    🟥 {{ vc_con_rod_journals.con_journal_3 }}
+                  </td>
+                {% endif %}
+                {% if vc_con_rod_journals.con_journal_4 and vc_con_rod_journals.con_journal_4 == 'Без изъянов' or vc_con_rod_journals.con_journal_4 == 'Царапина допустимая' %}
+                  <td>
+                    ✅ {{ vc_con_rod_journals.con_journal_4 }}
+                  </td>
+                  {% elif vc_con_rod_journals.con_journal_4 != None %}
+                  <td>
+                    🟥 {{ vc_con_rod_journals.con_journal_4 }}
+                  </td>
+                {% endif %}
+                {% if vc_con_rod_journals.con_journal_5 and vc_con_rod_journals.con_journal_5 == 'Без изъянов' or vc_con_rod_journals.con_journal_5 == 'Царапина допустимая' %}
+                  <td>
+                    ✅ {{ vc_con_rod_journals.con_journal_5 }}
+                  </td>
+                  {% elif vc_con_rod_journals.con_journal_5 != None %}
+                  <td>
+                    🟥 {{ vc_con_rod_journals.con_journal_5 }}
+                  </td>
+                {% endif %}
+                {% if vc_con_rod_journals.con_journal_6 and vc_con_rod_journals.con_journal_6 == 'Без изъянов' or vc_con_rod_journals.con_journal_6 == 'Царапина допустимая' %}
+                  <td>
+                    ✅ {{ vc_con_rod_journals.con_journal_6 }}
+                  </td>
+                  {% elif vc_con_rod_journals.con_journal_6 != None %}
+                  <td>
+                    🟥 {{ vc_con_rod_journals.con_journal_6 }}
+                  </td>
+                {% endif %}
+                {% if vc_con_rod_journals.con_journal_7 and vc_con_rod_journals.con_journal_7 == 'Без изъянов' or vc_con_rod_journals.con_journal_7 == 'Царапина допустимая' %}
+                  <td>
+                    ✅ {{ vc_con_rod_journals.con_journal_7 }}
+                  </td>
+                  {% elif vc_con_rod_journals.con_journal_7 != None %}
+                  <td>
+                    🟥 {{ vc_con_rod_journals.con_journal_7 }}
+                  </td>
+                {% endif %}
+                {% if vc_con_rod_journals.con_journal_8 and vc_con_rod_journals.con_journal_8 == 'Без изъянов' or vc_con_rod_journals.con_journal_8 == 'Царапина допустимая' %}
+                  <td>
+                    ✅ {{ vc_con_rod_journals.con_journal_8 }}
+                  </td>
+                  {% elif vc_con_rod_journals.con_journal_8 != None %}
+                  <td>
+                    🟥 {{ vc_con_rod_journals.con_journal_8 }}
+                  </td>
+                {% endif %}
+                {% if vc_con_rod_journals.con_journal_9 and vc_con_rod_journals.con_journal_9 == 'Без изъянов' or vc_con_rod_journals.con_journal_9 == 'Царапина допустимая' %}
+                  <td>
+                    ✅ {{ vc_con_rod_journals.con_journal_9 }}
+                  </td>
+                  {% elif vc_con_rod_journals.con_journal_9 != None %}
+                  <td>
+                    🟥 {{ vc_con_rod_journals.con_journal_9 }}
+                  </td>
+                {% endif %}
+                {% if vc_con_rod_journals.con_journal_10 and vc_con_rod_journals.con_journal_10 == 'Без изъянов' or vc_con_rod_journals.con_journal_10 == 'Царапина допустимая' %}
+                  <td>
+                    ✅ {{ vc_con_rod_journals.con_journal_10 }}
+                  </td>
+                {% elif vc_con_rod_journals.con_journal_10 != None %}
+                  <td>
+                    🟥 {{ vc_con_rod_journals.con_journal_10 }}
+                  </td>
+                {% endif %}
+              </tr>
+            </table>
+            <hr>
+            <h5>2. Изменения шатунных шеек коленчатого вала</h5>
+            <div class="mb-3 mb-md-0 d-flex">
+              <img src="{% static 'img/measuring_con_rod_journal.jpg' %}" srcset="{% static 'img/measuring_con_rod_journal.jpg' %} 320w, {% static 'img/measuring_con_rod_journal.jpg' %} 480w, {% static 'img/measuring_con_rod_journal.jpg' %} 768w" sizes="(max-width: 800px) 220px, (min-width: 800px) 420px">
+            </div>
+            {% if measur1_con_rod_journals.min_max_value.min_val != None and measur1_con_rod_journals.min_max_value.max_val != None %}
+            <table>
+              <tr>
+                <th> Минимально допустимое <br> значение </th>
+                <th> Максимально допустимое <br> значение </th>
+                <th> Единицы изменения </th>
+                <th> Измерительный прибор </th>
+              </tr>
+              <tr>
+                <td> {{ measur1_con_rod_journals.min_max_value.min_val }} </td>
+                <td> {{ measur1_con_rod_journals.min_max_value.max_val }} </td>
+                <td> {{ measur1_con_rod_journals.min_max_value.unit }} </td>
+                <td> {{ measur1_con_rod_journals.min_max_value.measuring_tool }} </td>
+              </tr>
+            </table>
+            <hr>
+            {% endif %}
+            <table>
+              <tr>
+                {% if measur1_con_rod_journals.con_journal_1_meas %}
+                  <th>
+                    1-ая шатунная (замер)
+                  </th>
+                {% endif %}
+                {% if measur1_con_rod_journals.con_journal_2_meas %}
+                  <th>
+                    2-ая шатунная (замер)
+                  </th>
+                {% endif %}
+                {% if measur1_con_rod_journals.con_journal_3_meas %}
+                  <th>
+                    3-я шатунная (замер)
+                  </th>
+                {% endif %}
+                {% if measur1_con_rod_journals.con_journal_4_meas %}
+                  <th>
+                    4-ая шатунная (замер)
+                  </th>
+                {% endif %}
+                {% if measur1_con_rod_journals.con_journal_5_meas %}
+                  <th>
+                    5-ая шатунная (замер)
+                  </th>
+                {% endif %}
+                {% if measur1_con_rod_journals.con_journal_6_meas %}
+                  <th>
+                    6-ая шатунная (замер)
+                  </th>
+                {% endif %}
+                {% if measur1_con_rod_journals.con_journal_7_meas %}
+                  <th>
+                    7-ая шатунная (замер)
+                  </th>
+                {% endif %}
+                {% if measur1_con_rod_journals.con_journal_8_meas %}
+                  <th>
+                    8-ая шатунная (замер)
+                  </th>
+                {% endif %}
+                {% if measur1_con_rod_journals.con_journal_9_meas %}
+                  <th>
+                    9-ая шатунная (замер)
+                  </th>
+                {% endif %}
+                {% if measur1_con_rod_journals.con_journal_10_meas %}
+                  <th>
+                    10-ая шатунная (замер)
+                  </th>
+                {% endif %}
+              </tr>
+              {% for item in measur_con_rod_journals %}
+                <tr>
+                  <td> {{ item.con_journal_1_meas }} </td>
+                  <td> {{ item.con_journal_2_meas }} </td>
+                  <td> {{ item.con_journal_3_meas }} </td>
+                  <td> {{ item.con_journal_4_meas }} </td>
+                  <td> {{ item.con_journal_5_meas }} </td>
+                  <td> {{ item.con_journal_6_meas }} </td>
+                  <td> {{ item.con_journal_7_meas }} </td>
+                  <td> {{ item.con_journal_8_meas }} </td>
+                  <td> {{ item.con_journal_9_meas }} </td>
+                  <td> {{ item.con_journal_10_meas }} </td>
+                </tr>
+              {% endfor %}
+            </table>
+            <div class="form-group">
+              <a class="btn btn-primary"
+                href="{% url 'disassembly:crankshaft_edit' repair.id esn.id %}">Изменить данные о дефектовке шатунных шеек коленчатого вала.</a>
+            </div>
+            <hr>
+            <h5>3. Визуальный осмотр коренных шеек коленчатого вала</h5>
+            <div class="mb-3 mb-md-0 d-flex">
+              <img src="{% static 'img/visual_cheсk_crankshaft.jpg' %}" srcset="{% static 'img/visual_cheсk_crankshaft.jpg' %} 320w, {% static 'img/visual_cheсk_crankshaft.jpg' %} 480w, {% static 'img/visual_cheсk_crankshaft.jpg' %} 768w" sizes="(max-width: 800px) 220px, (min-width: 800px) 420px">
+            </div>
+            <table>
+              <tr>
+                {% if vc_main_journals.main_journal_1 %}
+                  <th>
+                    1-ая коренная
+                  </th>
+                {% endif %}
+                {% if vc_main_journals.main_journal_2 %}
+                  <th>
+                    2-ая коренная
+                  </th>
+                {% endif %}
+                {% if vc_main_journals.main_journal_3 %}
+                  <th>
+                    3-я коренная
+                  </th>
+                {% endif %}
+                {% if vc_main_journals.main_journal_4 %}
+                  <th>
+                    4-ая коренная
+                  </th>
+                {% endif %}
+                {% if vc_main_journals.main_journal_5 %}
+                  <th>
+                    5-ая коренная
+                  </th>
+                {% endif %}
+                {% if vc_main_journals.main_journal_6 %}
+                  <th>
+                    6-ая коренная
+                  </th>
+                {% endif %}
+                {% if vc_main_journals.main_journal_7 %}
+                  <th>
+                    7-ая шатунная
+                  </th>
+                {% endif %}
+                {% if vc_main_journals.main_journal_8 %}
+                  <th>
+                    8-ая коренная
+                  </th>
+                {% endif %}
+                {% if vc_main_journals.main_journal_9 %}
+                  <th>
+                    9-ая коренная
+                  </th>
+                {% endif %}
+                {% if vc_main_journals.main_journal_10 %}
+                  <th>
+                    10-ая коренная
+                  </th>
+                {% endif %}
+                {% if vc_main_journals.main_journal_11 %}
+                  <th>
+                    11-ая коренная
+                  </th>
+                {% endif %}
+              </tr>
+              <tr>
+                {% if vc_main_journals.main_journal_1 and vc_main_journals.main_journal_1 == 'Без изъянов' or vc_main_journals.main_journal_1 == 'Царапина допустимая' %}
+                  <td>
+                    ✅ {{ vc_main_journals.main_journal_1 }}
+                  </td>
+                  {% elif vc_main_journals.main_journal_1 != None %}
+                  <td>
+                    🟥 {{ vc_main_journals.main_journal_1 }}
+                  </td>
+                {% endif %}
+                {% if vc_main_journals.main_journal_2 and vc_main_journals.main_journal_2 == 'Без изъянов' or vc_main_journals.main_journal_2 == 'Царапина допустимая' %}
+                  <td>
+                    ✅ {{ vc_main_journals.main_journal_2 }}
+                  </td>
+                  {% elif vc_main_journals.main_journal_2 != None %}
+                  <td>
+                    🟥 {{ vc_main_journals.main_journal_2 }}
+                  </td>
+                {% endif %}
+                {% if vc_main_journals.main_journal_3 and vc_main_journals.main_journal_3 == 'Без изъянов' or vc_main_journals.main_journal_3 == 'Царапина допустимая' %}
+                  <td>
+                    ✅ {{ vc_main_journals.main_journal_3 }}
+                  </td>
+                  {% elif vc_main_journals.main_journal_3 != None %}
+                  <td>
+                    🟥 {{ vc_main_journals.main_journal_3 }}
+                  </td>
+                {% endif %}
+                {% if vc_main_journals.main_journal_4 and vc_main_journals.main_journal_4 == 'Без изъянов' or vc_main_journals.main_journal_4 == 'Царапина допустимая' %}
+                  <td>
+                    ✅ {{ vc_main_journals.main_journal_4 }}
+                  </td>
+                  {% elif vc_main_journals.main_journal_4 != None %}
+                  <td>
+                    🟥 {{ vc_main_journals.main_journal_4 }}
+                  </td>
+                {% endif %}
+                {% if vc_main_journals.main_journal_5 and vc_main_journals.main_journal_5 == 'Без изъянов' or vc_main_journals.main_journal_5 == 'Царапина допустимая' %}
+                  <td>
+                    ✅ {{ vc_main_journals.main_journal_5 }}
+                  </td>
+                  {% elif vc_main_journals.main_journal_5 != None %}
+                  <td>
+                    🟥 {{ vc_main_journals.main_journal_5 }}
+                  </td>
+                {% endif %}
+                {% if vc_main_journals.main_journal_6 and vc_main_journals.main_journal_6 == 'Без изъянов' or vc_main_journals.main_journal_6 == 'Царапина допустимая' %}
+                  <td>
+                    ✅ {{ vc_main_journals.main_journal_6 }}
+                  </td>
+                  {% elif vc_main_journals.main_journal_6 != None %}
+                  <td>
+                    🟥 {{ vc_main_journals.main_journal_6 }}
+                  </td>
+                {% endif %}
+                {% if vc_main_journals.main_journal_7 and vc_main_journals.main_journal_7 == 'Без изъянов' or vc_main_journals.main_journal_7 == 'Царапина допустимая' %}
+                  <td>
+                    ✅ {{ vc_main_journals.main_journal_7 }}
+                  </td>
+                  {% elif vc_main_journals.main_journal_7 != None %}
+                  <td>
+                    🟥 {{ vc_main_journals.main_journal_7 }}
+                  </td>
+                {% endif %}
+                {% if vc_main_journals.main_journal_8 and vc_main_journals.main_journal_8 == 'Без изъянов' or vc_main_journals.main_journal_8 == 'Царапина допустимая' %}
+                  <td>
+                    ✅ {{ vc_main_journals.main_journal_8 }}
+                  </td>
+                  {% elif vc_main_journals.main_journal_8 != None %}
+                  <td>
+                    🟥 {{ vc_main_journals.main_journal_8 }}
+                  </td>
+                {% endif %}
+                {% if vc_main_journals.main_journal_9 and vc_main_journals.main_journal_9 == 'Без изъянов' or vc_main_journals.main_journal_9 == 'Царапина допустимая' %}
+                  <td>
+                    ✅ {{ vc_main_journals.main_journal_9 }}
+                  </td>
+                  {% elif vc_main_journals.main_journal_9 != None %}
+                  <td>
+                    🟥 {{ vc_main_journals.main_journal_9 }}
+                  </td>
+                {% endif %}
+                {% if vc_main_journals.main_journal_10 and vc_main_journals.main_journal_10 == 'Без изъянов' or vc_main_journals.main_journal_10 == 'Царапина допустимая' %}
+                  <td>
+                    ✅ {{ vc_main_journals.main_journal_10 }}
+                  </td>
+                  {% elif vc_main_journals.main_journal_10 != None %}
+                  <td>
+                    🟥 {{ vc_main_journals.main_journal_10 }}
+                  </td>
+                {% endif %}
+                {% if vc_main_journals.main_journal_11 and vc_main_journals.main_journal_11 == 'Без изъянов' or vc_main_journals.main_journal_11 == 'Царапина допустимая' %}
+                  <td>
+                    ✅ {{ vc_main_journals.main_journal_11 }}
+                  </td>
+                  {% elif vc_main_journals.main_journal_11 != None %}
+                  <td>
+                    🟥 {{ vc_main_journals.main_journal_11 }}
+                  </td>
+                {% endif %}
+              </tr>
+            </table>
+            <hr>
+            <h5>4. Проверка моментов затяжки противовесов коленчатого вала</h5>
+            <div class="mb-3 mb-md-0 d-flex">
+              <img src="{% static 'img/cheсk_counterweight.jpg' %}" srcset="{% static 'img/cheсk_counterweight.jpg' %} 320w, {% static 'img/cheсk_counterweight.jpg' %} 480w, {% static 'img/cheсk_counterweight.jpg' %} 768w" sizes="(max-width: 800px) 220px, (min-width: 800px) 420px">
+            </div>
+            <h6> Заданный момент затяжки {{ check_counterweight.torque }}</h6>
+            <table>
+              <tr>
+                {% if check_counterweight.counterweight_1 != None %}
+                  <th>
+                    1-ый противовес
+                  </th>
+                {% endif %}
+                {% if check_counterweight.counterweight_2 != None %}
+                  <th>
+                    2-ой противовес
+                  </th>
+                {% endif %}
+                {% if check_counterweight.counterweight_3 != None %}
+                  <th>
+                    3-ий противовес
+                  </th>
+                {% endif %}
+                {% if check_counterweight.counterweight_4 != None %}
+                  <th>
+                    4-ый противовес
+                  </th>
+                {% endif %}
+                {% if check_counterweight.counterweight_5 != None %}
+                  <th>
+                    5-ый противовес
+                  </th>
+                {% endif %}
+                {% if check_counterweight.counterweight_6 != None %}
+                  <th>
+                    6-ой противовес
+                  </th>
+                {% endif %}
+                {% if check_counterweight.counterweight_7 != None %}
+                  <th>
+                    7-ой противовес
+                  </th>
+                {% endif %}
+                {% if check_counterweight.counterweight_8 != None %}
+                  <th>
+                    8-ой противовес
+                  </th>
+                {% endif %}
+                {% if check_counterweight.counterweight_9 != None %}
+                  <th>
+                    9-ый противовес
+                  </th>
+                {% endif %}
+                {% if check_counterweight.counterweight_10 != None %}
+                  <th>
+                    10-ый противовес
+                  </th>
+                {% endif %}
+                {% if check_counterweight.counterweight_11 != None %}
+                  <th>
+                    11-ый противовес
+                  </th>
+                {% endif %}
+              </tr>
+              <tr>
+                {% if check_counterweight.counterweight_1 == True %}
+                  <td>
+                    ✅
+                  </td>
+                  {% elif check_counterweight.counterweight_1 != None %}
+                  <td>
+                    🟥
+                  </td>
+                {% endif %}
+                {% if check_counterweight.counterweight_2 == True %}
+                  <td>
+                    ✅
+                  </td>
+                  {% elif check_counterweight.counterweight_2 != None %}
+                  <td>
+                    🟥
+                  </td>
+                {% endif %}
+                {% if check_counterweight.counterweight_3 == True %}
+                <td>
+                  ✅
+                </td>
+                {% elif check_counterweight.counterweight_3 != None %}
+                <td>
+                  🟥
+                </td>
+                {% endif %}
+                {% if check_counterweight.counterweight_4 == True %}
+                  <td>
+                    ✅
+                  </td>
+                  {% elif check_counterweight.counterweight_4 != None %}
+                  <td>
+                    🟥
+                  </td>
+                {% endif %}
+                {% if check_counterweight.counterweight_5 == True %}
+                  <td>
+                    ✅
+                  </td>
+                  {% elif check_counterweight.counterweight_5 != None %}
+                  <td>
+                    🟥
+                  </td>
+                {% endif %}
+                {% if check_counterweight.counterweight_6 == True %}
+                  <td>
+                    ✅
+                  </td>
+                  {% elif check_counterweight.counterweight_6 != None %}
+                  <td>
+                    🟥
+                  </td>
+                {% endif %}
+                {% if check_counterweight.counterweight_7 == True %}
+                  <td>
+                    ✅
+                  </td>
+                  {% elif check_counterweight.counterweight_7 != None %}
+                  <td>
+                    🟥
+                  </td>
+                {% endif %}
+                {% if check_counterweight.counterweight_8 == True %}
+                  <td>
+                    ✅
+                  </td>
+                  {% elif check_counterweight.counterweight_8 != None %}
+                  <td>
+                    🟥
+                  </td>
+                {% endif %}
+                {% if check_counterweight.counterweight_9 == True %}
+                  <td>
+                    ✅
+                  </td>
+                  {% elif check_counterweight.counterweight_9 != None %}
+                  <td>
+                    🟥
+                  </td>
+                {% endif %}
+                {% if check_counterweight.counterweight_10 == True %}
+                  <td>
+                    ✅
+                  </td>
+                  {% elif check_counterweight.counterweight_10 != None %}
+                  <td>
+                    🟥
+                  </td>
+                {% endif %}
+                {% if check_counterweight.counterweight_11 == True %}
+                  <td>
+                    ✅
+                  </td>
+                  {% elif check_counterweight.counterweight_11 != None %}
+                  <td>
+                    🟥
+                  </td>
+                {% endif %}
+              </tr>
+            </table>
+            <hr>
+            <h5>5. Изменения коренных шеек коленчатого вала</h5>
+            <div class="mb-3 mb-md-0 d-flex">
+              <img src="{% static 'img/measuring_main_journal.jpg' %}" srcset="{% static 'img/measuring_main_journal.jpg' %} 320w, {% static 'img/measuring_main_journal.jpg' %} 480w, {% static 'img/measuring_main_journal.jpg' %} 768w" sizes="(max-width: 800px) 220px, (min-width: 800px) 420px">
+            </div>
+            {% if measur1_main_journals.min_max_value.min_val != None and measur1_main_journals.min_max_value.max_val != None %}
+            <table>
+              <tr>
+                <th> Минимально допустимое <br> значение </th>
+                <th> Максимально допустимое <br> значение </th>
+                <th> Единицы изменения </th>
+                <th> Измерительный прибор </th>
+              </tr>
+              <tr>
+                <td> {{ measur1_main_journals.min_max_value.min_val }} </td>
+                <td> {{ measur1_main_journals.min_max_value.max_val }} </td>
+                <td> {{ measur1_main_journals.min_max_value.unit }} </td>
+                <td> {{ measur1_main_journals.min_max_value.measuring_tool }} </td>
+              </tr>
+            </table>
+            <hr>
+            {% endif %}
+            <table>
+              <tr>
+                {% if measur1_main_journals.main_journal_1_meas %}
+                  <th>
+                    1-ая коренная (замер)
+                  </th>
+                {% endif %}
+                {% if measur1_main_journals.main_journal_2_meas %}
+                  <th>
+                    2-ая коренная (замер)
+                  </th>
+                {% endif %}
+                {% if measur1_main_journals.main_journal_3_meas %}
+                  <th>
+                    3-я коренная (замер)
+                  </th>
+                {% endif %}
+                {% if measur1_main_journals.main_journal_4_meas %}
+                  <th>
+                    4-ая коренная (замер)
+                  </th>
+                {% endif %}
+                {% if measur1_main_journals.main_journal_5_meas %}
+                  <th>
+                    5-ая коренная (замер)
+                  </th>
+                {% endif %}
+                {% if measur1_main_journals.main_journal_6_meas %}
+                  <th>
+                    6-ая коренная (замер)
+                  </th>
+                {% endif %}
+                {% if measur1_main_journals.main_journal_7_meas %}
+                  <th>
+                    7-ая коренная (замер)
+                  </th>
+                {% endif %}
+                {% if measur1_main_journals.main_journal_8_meas %}
+                  <th>
+                    8-ая коренная (замер)
+                  </th>
+                {% endif %}
+                {% if measur1_main_journals.main_journal_9_meas %}
+                  <th>
+                    9-ая коренная (замер)
+                  </th>
+                {% endif %}
+                {% if measur1_main_journals.main_journal_10_meas %}
+                  <th>
+                    10-ая коренная (замер)
+                  </th>
+                {% endif %}
+                {% if measur1_main_journals.main_journal_11_meas %}
+                  <th>
+                    11-ая коренная (замер)
+                  </th>
+                {% endif %}
+              </tr>
+              {% for item in measur_main_journals %}
+                <tr>
+                  <td> {{ item.main_journal_1_meas }} </td>
+                  <td> {{ item.main_journal_2_meas }} </td>
+                  <td> {{ item.main_journal_3_meas }} </td>
+                  <td> {{ item.main_journal_4_meas }} </td>
+                  <td> {{ item.main_journal_5_meas }} </td>
+                  <td> {{ item.main_journal_6_meas }} </td>
+                  <td> {{ item.main_journal_7_meas }} </td>
+                  <td> {{ item.main_journal_8_meas }} </td>
+                  <td> {{ item.main_journal_9_meas }} </td>
+                  <td> {{ item.main_journal_10_meas }} </td>
+                  <td> {{ item.main_journal_11_meas }} </td>
+                </tr>
+              {% endfor %}
+            </table>
+            <hr>
+            <h5>6. Фото дефектов коленчатого вала</h5>
+            {% load thumbnail %}
+            {% for img in crankshaft_images %}
+              {% thumbnail img.image "2000" as big %}
+                {% thumbnail img.image "100x100" crop="center" as small %}
+                    <a href="{{ big.url}}" title="Фото"><img src="{{ small.url }}"></a>
+                    <a href="{% url 'disassembly:single_image_edit' repair_id esn.id img.id %}">Изменить/Удалить</a>
+                {% endthumbnail %} 
+              {% endthumbnail %}
+            {% endfor %}
+            <div class="form-group">
+              <a class="btn btn-primary"
+                href="{% url 'disassembly:crankshaft_list2_edit' repair.id esn.id %}"> Изменить данные о дефектовке коренных шеек и противовесов коленчатого вала. </a>
+            </div>
+            <hr>
+            <div class="form-group">
+              <a class="btn btn-primary"
+                href="{% url 'disassembly:crankshaft_delete' repair.id esn.id %}">Удалить данные о дефектовке коленчатого вала. </a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}

@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% block title %}
+  {% if is_edit %}
+    Новая запись.
+  {% else %}
+    Редактировать запись.
+  {% endif %}
+{% endblock %}
+{% block content %}
+  <aside id="sidebar">
+      <nav class="navbar navbar-expand-lg navbar-light bd-navbar sticky-top" style="width: 250px;">
+          <div class="container">
+              <div class="navbar navbar-fixed-top" id="sidebar-wrapper" role="navigation">
+                  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    {% include 'includes/repair_detail_menu.html' %}
+                  </div>
+              </div>
+          </div>
+      </nav>
+  </aside>
+<main id="content">
+  <div class="d-md-flex flex-md-row-reverse align-items-center justify-content-between">
+    <div class="col-md-9 p-5">
+      <div class="card">
+        <div class="card-header">
+          {% if is_edit %}
+            Новая запись.
+          {% else %}
+            Редактировать запись.
+          {% endif %}
+        </div>
+        <div class="card-body">
+          {% load user_filters %}
+          {% if form.errors %}
+            {% for field in form %}
+              {% for error in field.errors %}
+                <div class="alert alert-danger">
+                  {{ error|escape }}
+                </div>
+              {% endfor %}
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+              <div class="alert alert-danger">
+                {{ error|escape }}
+              </div>
+            {% endfor %}
+          {% endif %}
+          {{ form.media }}
+          <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% for field in form %}
+              <div class="form-group row my-3 p-3">
+                <label for="{{ field.id_for_label }}">
+                  {{ field.label }}
+                  {% if field.field.required %}
+                    <span class="required text-danger">*</span>
+                  {% endif %}
+                </label>
+                  {{ field|addclass:'form-control' }}
+                {% if field.help_text %}
+                  <small id="{{ field.id_for_label }}-help" class="form-text text-muted">
+                    {{ field.help_text }}
+                  </small>
+                {% endif %}
+              </div>
+            {% endfor %}
+            {% for field in form_u %}
+              <div class="form-group row my-3 p-3">
+                <label for="{{ field.id_for_label }}">
+                  {{ field.label }}
+                  {% if field.field.required %}
+                    <span class="required text-danger">*</span>
+                  {% endif %}
+                </label>
+                {{ field|addclass:'form-control' }}
+                {% if field.help_text %}
+                  <small id="{{ field.id_for_label }}-help" class="form-text text-muted">
+                    {{ field.help_text }}
+                  </small>
+                {% endif %}
+              </div>
+            {% endfor %}
+            <div class="d-flex justify-content-end">
+              <ul>
+                <button type="submit" class="btn btn-primary">
+                  <a class="btn btn-primary">
+                  {% if is_edit %}
+                    Сохранить.
+                  {% else %}
+                    Сохранить изменения.
+                  {% endif %}
+                  </a>
+                </button>
+              </ul>
+            </div>
+          </form>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+          {{ form.media.js }}
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}

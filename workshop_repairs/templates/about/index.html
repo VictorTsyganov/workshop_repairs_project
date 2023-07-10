@@ -4,20 +4,17 @@
 {% endblock %}
 {% block content %}
 {% load static %}
-<div class="container-xxl bd-gutter mt-3 my-md-4">
-    <aside id="sidebar">
-        <nav class="navbar navbar-expand-lg navbar-light bd-navbar sticky-top" style="width: 300px;">
-            <div class="container">
-                <div class="navbar navbar-fixed-top" id="sidebar-wrapper" role="navigation">
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        
-                            {% include 'includes/start_menu.html' %}
-                        
-                    </div>
+<aside id="sidebar">
+    <nav class="navbar navbar-expand-lg navbar-light bd-navbar sticky-top" style="width: 300px;">
+        <div class="container">
+            <div class="navbar navbar-fixed-top" id="sidebar-wrapper" role="navigation">
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    {% include 'includes/start_menu.html' %} 
                 </div>
             </div>
-        </nav>
-    </aside>
+        </div>
+    </nav>
+</aside>
 </div>
 <main id="content_main">
     <div class="container"> 

@@ -8,8 +8,16 @@
   {% with request.resolver_match.view_name as view_name %}
     {% if user.is_authenticated %}
       <li class="nav-item" style="width: 280px;">
-        <a class="nav-link link-dark {% if view_name  == 'journal_repairs:journal' %}active{% endif %}" 
-        href="{% url 'journal_repairs:journal' %}">Новая запись в журнал.</a>
+        <a class="nav-link link-dark {% if view_name  == 'journal_repairs:repair' %}active{% endif %}" 
+        href="{% url 'journal_repairs:repair' %}">Журнал ремонтов.</a>
+      </li>
+      <li class="nav-item" style="width: 280px;">
+        <a class="nav-link link-dark {% if view_name  == 'journal_repairs:repair_create' %}active{% endif %}" 
+        href="{% url 'journal_repairs:repair_create' %}">Новая запись в журнал.</a>
+      </li>
+      <li class="nav-item" style="width: 280px;">
+        <a class="nav-link link-dark {% if view_name  == 'journal_repairs:esn_add' %}active{% endif %}" 
+        href="{% url 'journal_repairs:esn_add' %}">Добавить номера ДВС в заявки.</a>
       </li>
       <li class="nav-item" style="width: 280px;">
           <a class="nav-link link-dark {% if view_name  == 'users:password_change' %}active{% endif %}" 

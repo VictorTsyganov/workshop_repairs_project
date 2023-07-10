@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% block title %}
+  Дефектовка коленчатого вала.
+{% endblock %}
+{% block content %}
+
+  <aside id="sidebar">
+      <nav class="navbar navbar-expand-lg navbar-light bd-navbar sticky-top" style="width: 250px;">
+          <div class="container">
+              <div class="navbar navbar-fixed-top" id="sidebar-wrapper" role="navigation">
+                  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    {% include 'includes/repair_detail_menu.html' %}
+                  </div>
+              </div>
+          </div>
+      </nav>
+  </aside>
+<main id="content">  
+  <div class="d-md-flex flex-md-row-reverse align-items-center justify-content-between">
+    <div class="col-md-9 p-5">
+      <div class="card">
+        <div class="card-header">
+          <h3>Дефектовка коленчатого вала. Заявка на ремонт {{ repair.repair_number }}</h3>
+        </div>
+        <div class="card-body">
+          <div class="form-group">
+            <a class="btn btn-primary"
+              href="{% url 'disassembly:crankshaft_create' repair.id %}">Добавить данные о дефектовке коленчатого вала.</a>
+          </div>
+          <hr>
+          <article>
+            <ul>
+              {% for post in dis_crankshaft %}
+                  <li>
+                    Сотрудник производивший дефектовку: {{ post.author.get_username }}
+                  </li>
+                  <li>
+                    Дата дефектовки: {{ post.pub_date }}
+                  </li>
+                  <li>
+                    {{ post }}
+                  </li>
+                  <li>
+                    Примечания:
+                  </li>
+                  <table>
+                    <tr> 
+                      <th>
+                        {% if post in list_counterweight_torque %}
+                          <div class="form-group">
+                            <a class="btn btn-primary"
+                              href="{% url 'disassembly:crankshaft_view_detail' repair.id post.engine_number.id %}">Детали о дефектовке коленчатого вала ДВС {{ post.engine_number.engine_number }}.</a>
+                          </div>
+                        {% else %}
+                        <a class="btn btn-primary"
+                          href="{% url 'disassembly:crankshaft_create_list2' repair.id post.engine_number.id %}">Заполнить 2-ой лист, т.к. не был заполнен.</a>
+                        {% endif %}
+                      </th>
+                    </tr>
+                  </table>
+                  {% if not forloop.last %}<hr>{% endif %}
+              {% endfor %}
+            </ul>
+          </article>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}

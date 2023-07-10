@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% block title %}
+  Заявка {{ repair.repair_number }}.
+{% endblock %}
+{% block content %}
+  <aside id="sidebar">
+      <nav class="navbar navbar-expand-lg navbar-light bd-navbar sticky-top" style="width: 250px;">
+          <div class="container">
+              <div class="navbar navbar-fixed-top" id="sidebar-wrapper" role="navigation">
+                  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    {% include 'includes/repair_detail_menu.html' %} 
+                  </div>
+              </div>
+          </div>
+      </nav>
+  </aside>
+<main id="content">  
+  <div class="d-md-flex flex-md-row-reverse align-items-center justify-content-between">
+    <div class="col-md-9 p-5">
+      <div class="card">
+        <div class="card-header">
+          <h3>Заявка на ремонт {{ repair.repair_number }}</h3>
+        </div>
+        <div class="card-body">
+          <article>
+            <ul>
+              <li>
+                <mark><b>Сотрудник производивший приемку: </b></mark> {{ acceptance.author.get_username}}
+              </li>
+              <li>
+                <mark><b>Дата приемки: </b></mark> {{ acceptance.pub_date}}
+              </li>
+              <li>
+                <mark><b>Модель двигателя: </b></mark> {{ acceptance.engine_number.engine}}
+              </li>
+              <li>
+                <mark><b>Номер двигателя: </b></mark> {{ acceptance.engine_number.engine_number}}
+              </li>
+              <li>
+                <mark><b>Рама двигателя: </b></mark>
+                {% if acceptance.transport_frame %}
+                  ✅
+                {% else %}
+                  🟥 
+                {% endif %}
+              </li>
+              <li>
+                <mark><b>Примечания по раме: </b></mark> {{ acceptance.transport_frame_com}}
+              </li>
+              <li>
+                <mark><b>Демпфер двигателя: </b></mark> 
+                {% if acceptance.damper %}
+                  ✅
+                {% else %}
+                  🟥 
+                {% endif %}
+              </li>
+              <li>
+                <mark><b>Количество демпферов, если не все в наличии: </b></mark> {{ acceptance.damper_count}}
+              </li>
+              <li>
+                <mark><b>ГБЦ двигателя: </b></mark> 
+                {% if acceptance.cylinder_head %}
+                  ✅
+                {% else %}
+                  🟥
+                {% endif %}
+              </li>
+              <li>
+                <mark><b>Количество ГБЦ, если не все в наличии: </b></mark> {{ acceptance.cylinder_head_count}}
+              </li>
+              <li>
+                <mark><b>Топливный насос: </b></mark> 
+                {% if acceptance.fuel_pump %}
+                  ✅
+                {% else %}
+                  🟥 
+                {% endif %}
+              </li>
+              <li>
+                <mark><b>Количество ТН, если не все в наличии: </b></mark> {{ acceptance.fuel_pump_count}}
+              </li>
+              <li>
+                <mark><b>Примечания: </b></mark> {{ acceptance.description}}
+              </li>
+              <table>
+                <tr> 
+                  <th> 
+                    <div class="form-group">
+                      <a class="btn btn-primary"
+                        href="{% url 'acceptance_aggregate:acceptance_aggregate_edit' repair_id acceptance.id %}">Редактировать данные о приемке оборудования или добавить фото.</a>
+                    </div>
+                  </th>
+                  <th>
+                    {% if user == acceptance.author or user.is_staff %}
+                      <div class="form-group">
+                        <a class="btn btn-primary"
+                          href="{% url 'acceptance_aggregate:acceptance_aggregate_delete' repair_id acceptance.id %}">Удалить данные о приемке оборудования.</a>
+                      </div>
+                    {% endif %}
+                  </th>
+                </tr>
+              </table>
+              {% if not forloop.last %}<hr>{% endif %}
+            </ul>
+            {% load thumbnail %}
+            {% for img in images %}
+              {% thumbnail img.image "2000" as big %}
+                {% thumbnail img.image "100x100" crop="center" as small %}
+                    <a href="{{ big.url}}" title="Фото"><img src="{{ small.url }}"></a>
+                    <a href="{% url 'acceptance_aggregate:single_image_edit' repair_id acceptance.id img.id %}">Изменить/Удалить</a>
+                {% endthumbnail %}
+                
+              {% endthumbnail %}
+              
+            {% endfor %}
+          </article>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}
