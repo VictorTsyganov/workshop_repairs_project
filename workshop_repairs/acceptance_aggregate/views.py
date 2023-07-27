@@ -1,10 +1,11 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import get_object_or_404, redirect, render
 from django.core.files.base import ContentFile
+from django.shortcuts import get_object_or_404, redirect, render
 
-from .models import AcceptanceAggregate, Image
-from .forms import AcceptanceAggregateForm, ImageForm, SingleImageForm
 from journal_repairs.models import Repair
+
+from .forms import AcceptanceAggregateForm, ImageForm, SingleImageForm
+from .models import AcceptanceAggregate, Image
 
 
 @login_required
@@ -37,8 +38,8 @@ def acceptance_aggregate_create(request, repair_id):
                    'repair_id': repair_id,
                    'repair': repair,
                    'is_edit': True}
-        return render(request,
-                      'acceptance_aggregate/create_record_form_u.html', context)
+        return render(
+            request, 'acceptance_aggregate/create_record_form_u.html', context)
 
     post = form.save(commit=False)
     post.author = request.user
@@ -73,8 +74,8 @@ def acceptance_aggregate_edit(request, repair_id, acceptance_id):
                    'repair_id': repair_id,
                    'repair': repair,
                    'is_edit': False}
-        return render(request,
-                      'acceptance_aggregate/create_record_form_u.html', context)
+        return render(
+            request, 'acceptance_aggregate/create_record_form_u.html', context)
 
     post = form.save(commit=False)
     post.author = request.user
@@ -93,11 +94,11 @@ def acceptance_aggregate_edit(request, repair_id, acceptance_id):
 @login_required
 def acceptance_aggregate_delete(request, repair_id, acceptance_id):
     acceptance = get_object_or_404(AcceptanceAggregate, id=acceptance_id)
-    
+
     if not request.user == acceptance.author and not request.user.is_staff:
         return redirect('acceptance_aggregate:acceptance_aggregate_view',
-                    repair_id=repair_id)
-    
+                        repair_id=repair_id)
+
     acceptance.delete()
     return redirect('acceptance_aggregate:acceptance_aggregate_view',
                     repair_id=repair_id)
@@ -133,8 +134,8 @@ def single_image_edit(request, repair_id, acceptance_id, image_id):
                    'repair': repair,
                    'image': image,
                    'is_edit': False}
-        return render(request,
-                      'acceptance_aggregate/create_record_form_u.html', context)
+        return render(
+            request, 'acceptance_aggregate/create_record_form_u.html', context)
 
     post = form.save(commit=False)
     post.save()

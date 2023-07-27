@@ -1,11 +1,11 @@
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
-from django.shortcuts import get_object_or_404, redirect, render
 from django.db.models import Q
+from django.shortcuts import get_object_or_404, redirect, render
 
-from .forms import (RepairForm, EngineNumberForm, EngineNumberRepairForm,
-                    EngineHoursForm, CommentForm)
+from .forms import (CommentForm, EngineHoursForm, EngineNumberForm,
+                    EngineNumberRepairForm, RepairForm)
 from .models import Customer, EngineNumber, Repair
 
 
@@ -188,8 +188,8 @@ def search(request):
     if request.method == 'GET':
         query = request.GET.get('search', default='')
     repairs = Repair.objects.filter(
-        Q(repair_number__icontains=query) |
-        Q(customer__name__icontains=query)
+        Q(repair_number__icontains=query)
+        | Q(customer__name__icontains=query)
     )
     page_obj = create_paginator(request, repairs)
     template = 'repairs/journal_repairs.html'
@@ -207,8 +207,8 @@ def esn_search(request):
     if request.method == 'GET':
         query = request.GET.get('search', default='')
     repairs = Repair.objects.filter(
-        Q(engine_numbers__engine_number__icontains=query) |
-        Q(engine_numbers__engine__title__icontains=query)
+        Q(engine_numbers__engine_number__icontains=query)
+        | Q(engine_numbers__engine__title__icontains=query)
     )
     page_obj = create_paginator(request, repairs)
     template = 'repairs/journal_repairs.html'

@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 import os
-
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -31,6 +30,8 @@ ALLOWED_HOSTS = [
     '127.0.0.1',
     '[::1]',
     'testserver',
+    'www.victortsyganov.pythonanywhere.com',
+    'victortsyganov.pythonanywhere.com'
 ]
 
 
@@ -74,6 +75,13 @@ ROOT_URLCONF = 'workshop_repairs.urls'
 TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
+
+STATIC_URL = '/static/'
+# Указываем корневую директорию для сборки статических файлов;
+# в контейнере это будет /app/collected_static
+STATIC_ROOT = BASE_DIR / 'collected_static'
+
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',

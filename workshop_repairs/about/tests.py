@@ -11,7 +11,7 @@ class AboutUrlTest(TestCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.user = User.objects.create_user(username='admin')
-    
+
     def setUp(self):
         self.guest_client = Client()
         self.admin = User.objects.get(username='admin')
@@ -21,7 +21,6 @@ class AboutUrlTest(TestCase):
         self.login_page = '/auth/login/'
         self.password_reset_page = '/auth/password_reset_admin/'
         self.password_change_page = '/auth/password_change/'
-
 
     def test_pages_about_to_all_users(self):
         urls_name = {

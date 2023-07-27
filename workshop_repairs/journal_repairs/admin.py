@@ -1,8 +1,8 @@
 from django.contrib import admin
 
-from .models import (Engine, RepairType, Customer, CustomerContact, Repair, 
-                     EngineHours, EngineNumber, Еquipment, AddressOperation,
-                     EngineNumberRepair)
+from .models import (AddressOperation, Customer, CustomerContact, Engine,
+                     EngineHours, EngineNumber, EngineNumberRepair, Repair,
+                     RepairType, Еquipment)
 
 
 class EngineAdmin(admin.ModelAdmin):

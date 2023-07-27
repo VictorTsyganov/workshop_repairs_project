@@ -35,7 +35,6 @@ class ImageForm(forms.ModelForm):
     class Meta:
         model = Image
         fields = ['image',]
-        
 
     image = MultiImageField(label=u'Фотографии')
 

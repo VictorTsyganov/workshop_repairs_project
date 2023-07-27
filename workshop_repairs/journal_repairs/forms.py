@@ -1,8 +1,8 @@
 from django import forms
 from django_select2 import forms as s2forms
 
-from .models import (EngineHours, EngineNumber, EngineNumberRepair,
-                     Repair, Comment)
+from .models import (Comment, EngineHours, EngineNumber, EngineNumberRepair,
+                     Repair)
 
 
 class CustomerWidget(s2forms.ModelSelect2Widget):
@@ -74,7 +74,7 @@ class RepairForm(forms.ModelForm):
                       'description': 'Описание неисправности и примечания.'
                       }
         fields = ['repair_number',
-                  'repair_type',  'customer',
+                  'repair_type', 'customer',
                   'customer_contacts', 'address',
                   'description']
         widgets = {
@@ -104,7 +104,7 @@ class EngineNumberForm(forms.ModelForm):
                                   'Короткое название объекта.'),
                       }
         fields = ['engine_number', 'engine',
-                  'equipment',  'owner',
+                  'equipment', 'owner',
                   'address', 'equipment_number',
                   'start_date']
         widgets = {

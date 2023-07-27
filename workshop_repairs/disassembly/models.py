@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 
-from journal_repairs.models import Repair, EngineNumber
+from journal_repairs.models import EngineNumber, Repair
 
 User = get_user_model()
 
@@ -110,7 +110,8 @@ class VisualCheckConRodJournals(models.Model):
         ordering = ('-pub_date',)
         constraints = [
             models.UniqueConstraint(
-                fields=['engine_number', 'repair'], name='unique_repair_engine')
+                fields=['engine_number', 'repair'],
+                name='unique_repair_engine')
         ]
 
 
@@ -515,24 +516,24 @@ class MeasuringMainJournals(models.Model):
 
 class ImageCrankshaft(models.Model):
     image = models.ImageField(
-        verbose_name = 'Фото дефектов коленчатого вала',
+        verbose_name='Фото дефектов коленчатого вала',
         upload_to='crankshaft/',
         blank=True,
         null=True,
     )
     pub_date = models.DateTimeField(
-        verbose_name = 'Дата фото.',
+        verbose_name='Дата фото.',
         auto_now_add=True
     )
     vc_con_rod_journsls = models.ForeignKey(
         VisualCheckConRodJournals,
         on_delete=models.CASCADE,
         related_name='crankshaft_images',
-        verbose_name = 'Фото дефектов коленчатого вала'
+        verbose_name='Фото дефектов коленчатого вала'
     )
 
     def __str__(self):
         return f'Фото дефектов коленчатого вала {self.vc_con_rod_journsls}.'
-    
+
     class Meta:
         ordering = ('-pub_date',)

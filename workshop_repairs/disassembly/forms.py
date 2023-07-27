@@ -2,9 +2,10 @@ from django import forms
 from django_select2 import forms as s2forms
 from multiupload.fields import MultiImageField
 
-from .models import (VisualCheckConRodJournals, VisualCheckMainJournals,
-                     CheckСounterweightTorque, MeasuringConRodJournals,
-                     MeasuringMainJournals, MinMaxValue, ImageCrankshaft)
+from .models import (CheckСounterweightTorque, ImageCrankshaft,
+                     MeasuringConRodJournals, MeasuringMainJournals,
+                     MinMaxValue, VisualCheckConRodJournals,
+                     VisualCheckMainJournals)
 
 
 class EngineNumberWidger(s2forms.ModelSelect2Widget):
@@ -121,7 +122,6 @@ class ImageCrankshaftForm(forms.ModelForm):
     class Meta:
         model = ImageCrankshaft
         fields = ['image',]
-        
 
     image = MultiImageField(label=u'Фотографии дефектов')
 

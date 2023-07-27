@@ -1,24 +1,17 @@
-from django.conf import settings
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import get_object_or_404, get_list_or_404, redirect, render
 from django.core.files.base import ContentFile
+from django.shortcuts import (get_list_or_404, get_object_or_404, redirect,
+                              render)
 
-from .forms import (VisualCheckConRodJournalsForm,
-                    VisualCheckMainJournalsForm,
-                    CheckСounterweightTorqueForm,
-                    MeasuringConRodJournalsForm,
-                    MeasuringMainJournalsForm,
-                    MinMaxValueForm,
-                    ImageCrankshaftForm,
-                    SingleImageForm
-                    )
-from journal_repairs.models import Repair, EngineNumber
-from .models import (MeasuringConRodJournals,
-                     MeasuringMainJournals,
-                     VisualCheckConRodJournals,
-                     VisualCheckMainJournals,
-                     CheckСounterweightTorque,
-                     ImageCrankshaft)
+from journal_repairs.models import EngineNumber, Repair
+
+from .forms import (CheckСounterweightTorqueForm, ImageCrankshaftForm,
+                    MeasuringConRodJournalsForm, MeasuringMainJournalsForm,
+                    MinMaxValueForm, SingleImageForm,
+                    VisualCheckConRodJournalsForm, VisualCheckMainJournalsForm)
+from .models import (CheckСounterweightTorque, ImageCrankshaft,
+                     MeasuringConRodJournals, MeasuringMainJournals,
+                     VisualCheckConRodJournals, VisualCheckMainJournals)
 
 
 @login_required
@@ -55,9 +48,8 @@ def crankshaft_create(request, repair_id):
         files=request.FILES or None
     )
     if (not form_v_check_con_rod.is_valid()
-        and not form_missuring_con_rod.is_valid()
-        and not form_min_max_val.is_valid()
-        ):
+            and not form_missuring_con_rod.is_valid()
+            and not form_min_max_val.is_valid()):
         context = {'form_v_check_con_rod': form_v_check_con_rod,
                    'form_missuring_con_rod': form_missuring_con_rod,
                    'form_min_max_val': form_min_max_val,
@@ -91,8 +83,8 @@ def crankshaft_create(request, repair_id):
             con_journal_10_meas=request.POST.getlist('con_journal_10_meas')[i]
         )
 
-    return redirect('disassembly:crankshaft_create_list2', 
-                    repair_id=repair_id, esn_id = con_rod.engine_number.id)
+    return redirect('disassembly:crankshaft_create_list2',
+                    repair_id=repair_id, esn_id=con_rod.engine_number.id)
 
 
 @login_required
@@ -118,9 +110,8 @@ def crankshaft_edit(request, repair_id, esn_id):
         files=request.FILES or None,
     )
     if (not form_v_check_con_rod.is_valid()
-        and not form_missuring_con_rod.is_valid()
-        and not form_min_max_val.is_valid()
-        ):
+            and not form_missuring_con_rod.is_valid()
+            and not form_min_max_val.is_valid()):
         context = {'form_v_check_con_rod': form_v_check_con_rod,
                    'form_missuring_con_rod': form_missuring_con_rod,
                    'form_min_max_val': form_min_max_val,
@@ -156,8 +147,8 @@ def crankshaft_edit(request, repair_id, esn_id):
             con_journal_10_meas=request.POST.getlist('con_journal_10_meas')[i]
         )
 
-    return redirect('disassembly:crankshaft_view_detail', 
-                    repair_id=repair_id, esn_id = con_rod.engine_number.id)
+    return redirect('disassembly:crankshaft_view_detail',
+                    repair_id=repair_id, esn_id=con_rod.engine_number.id)
 
 
 @login_required
@@ -185,11 +176,10 @@ def crankshaft_create_list2(request, repair_id, esn_id):
         files=request.FILES or None
     )
     if (not form_v_check_main.is_valid()
-        and not form_check_counterweight.is_valid()
-        and not form_missuring_main.is_valid()
-        and not form_min_max_val.is_valid()
-        and not form_crankshaft_images.is_valid()
-        ):
+            and not form_check_counterweight.is_valid()
+            and not form_missuring_main.is_valid()
+            and not form_min_max_val.is_valid()
+            and not form_crankshaft_images.is_valid()):
         context = {'form_v_check_main': form_v_check_main,
                    'form_check_counterweight': form_check_counterweight,
                    'form_missuring_main': form_missuring_main,
@@ -209,7 +199,8 @@ def crankshaft_create_list2(request, repair_id, esn_id):
     main.engine_number = esn
     main.save()
     vc_cr_journals = get_object_or_404(
-        VisualCheckConRodJournals, repair=repair, engine_number=main.engine_number)
+        VisualCheckConRodJournals, repair=repair,
+        engine_number=main.engine_number)
     counterweight = form_check_counterweight.save(commit=False)
     counterweight.author = request.user
     counterweight.repair = repair
@@ -260,12 +251,12 @@ def crankshaft_list2_edit(request, repair_id, esn_id):
     form_v_check_main = VisualCheckMainJournalsForm(
         request.POST or None,
         files=request.FILES or None,
-        instance = vc_main_journals
+        instance=vc_main_journals
     )
     form_check_counterweight = CheckСounterweightTorqueForm(
         request.POST or None,
         files=request.FILES or None,
-        instance = check_counterweight
+        instance=check_counterweight
     )
     form_missuring_main = MeasuringMainJournalsForm(
         request.POST or None,
@@ -280,11 +271,10 @@ def crankshaft_list2_edit(request, repair_id, esn_id):
         files=request.FILES or None
     )
     if (not form_v_check_main.is_valid()
-        and not form_check_counterweight.is_valid()
-        and not form_missuring_main.is_valid()
-        and not form_min_max_val.is_valid()
-        and not form_crankshaft_images.is_valid()
-        ):
+            and not form_check_counterweight.is_valid()
+            and not form_missuring_main.is_valid()
+            and not form_min_max_val.is_valid()
+            and not form_crankshaft_images.is_valid()):
         context = {'form_v_check_main': form_v_check_main,
                    'form_check_counterweight': form_check_counterweight,
                    'form_missuring_main': form_missuring_main,
@@ -304,7 +294,8 @@ def crankshaft_list2_edit(request, repair_id, esn_id):
     main.engine_number = esn
     main.save()
     vc_cr_journals = get_object_or_404(
-        VisualCheckConRodJournals, repair=repair, engine_number=main.engine_number)
+        VisualCheckConRodJournals,
+        repair=repair, engine_number=main.engine_number)
     counterweight = form_check_counterweight.save(commit=False)
     counterweight.author = request.user
     counterweight.repair = repair
@@ -339,8 +330,8 @@ def crankshaft_list2_edit(request, repair_id, esn_id):
         photo.image.save(img.name, ContentFile(data))
         photo.save()
 
-    return redirect('disassembly:crankshaft_view_detail', 
-                    repair_id=repair_id, esn_id = esn.id)
+    return redirect('disassembly:crankshaft_view_detail',
+                    repair_id=repair_id, esn_id=esn.id)
 
 
 @login_required
@@ -394,10 +385,11 @@ def crankshaft_delete(request, repair_id, esn_id):
     measur_main_journals = get_list_or_404(
         MeasuringMainJournals, repair=repair, engine_number=esn)
     min_max_main = measur_main_journals[0].min_max_value
-    
-    if not request.user == vc_con_rod_journals.author and not request.user.is_staff:
+
+    if (not request.user == vc_con_rod_journals.author
+            and not request.user.is_staff):
         return redirect('disassembly:crankshaft_view', repair_id=repair_id)
-    
+
     vc_con_rod_journals.delete()
     vc_main_journals.delete()
     check_counterweight.delete()
@@ -422,8 +414,8 @@ def single_image_edit(request, repair_id, esn_id, image_id):
                    'repair': repair,
                    'image': image,
                    'is_edit': False}
-        return render(request,
-                      'acceptance_aggregate/create_record_form_u.html', context)
+        return render(
+            request, 'acceptance_aggregate/create_record_form_u.html', context)
 
     post = form.save(commit=False)
     post.save()
