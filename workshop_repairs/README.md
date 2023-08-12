@@ -29,7 +29,7 @@
 
 Перейти в папку workshop_repairs в командной строке:
 
-``` cd cd workshop_repairs ``` 
+``` cd workshop_repairs ``` 
 
 Установить зависимости из файла requirements:
 
